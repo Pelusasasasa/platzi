@@ -27,6 +27,9 @@ function toggleMobileMenu() {
   if (!shoppingCartContainer.classList.contains('inactive')) {
     shoppingCartContainer.classList.add('inactive')
   }
+
+  closeProductDetailAside();
+
 }
 
 function toggleCarritoAside() {
@@ -39,10 +42,18 @@ function toggleCarritoAside() {
   if(!desktopMenu.classList.contains('inactive')){
     desktopMenu.classList.add('inactive');
   }
+
+  if(!productDetail.classList.contains('inactive')){
+    productDetail.classList.add('inactive');
+  }
 }
 
 function openProductDetailAside() {
-    productDetail.classList.remove('inactive')
+    productDetail.classList.remove('inactive');
+
+    if (!shoppingCartContainer.classList.contains('inactive')) {
+      shoppingCartContainer.classList.add('inactive');
+    }
 };
 
 function closeProductDetailAside() {
