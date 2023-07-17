@@ -9,7 +9,7 @@ function useLocalStorage(itemName,initialValue) {
     useEffect(() => {
         setTimeout(() => {
           try {
-            const parseItems = JSON.parse(localStorage.getItem(itemName));
+            let parseItems = JSON.parse(localStorage.getItem(itemName));
           
             if (!parseItems) {
                 localStorage.setItem(itemName,JSON.stringify(initialValue));

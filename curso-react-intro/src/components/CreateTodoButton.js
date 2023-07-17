@@ -1,13 +1,8 @@
 import '../css/CreateTodoButton.css';
-function CreateTodoButton() {
+function CreateTodoButton({setOpenModal}) {
     return (
-        <button className="CreateTodoButton" onClick={crearTodo}>+</button>
+        <button className="CreateTodoButton" onClick={()=>{setOpenModal(state => !state)}}>+</button>
     )
-}
-
-
-function crearTodo(){
-    console.log("Le diste Click");
 }
 
 export {CreateTodoButton};

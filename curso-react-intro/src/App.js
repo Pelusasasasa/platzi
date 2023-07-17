@@ -6,52 +6,33 @@ import { CreateTodoButton } from './components/CreateTodoButton';
 import { TodoItem } from './components/TodoItem';
 import { TodosLoading } from './components/TodosLoading';
 import { TodosError } from './components/TodosError';
-import { useState,useEffect } from 'react';
-import {useLocalStorage} from './hooks/useLocalStorage';
 import { EmptyTodos } from './components/EmptyTodos';
+import {TodoContext} from './TodoContext/index';
+import { useContext} from 'react';
+import { Modal } from './Modal';
 
 function App() {
-
-  const {item:todos,saveItem:saveTodos,loading,error} = useLocalStorage('TODOS_V1',[]);
-
-  const [searchValue,setSearchValue] = useState('');
-
-  const completedTodos = todos.filter(todo=>todo.completed).length;
-  const totalTodos = todos.length;
-
-  const searchedTodos = todos.filter(todo => todo.text.toUpperCase().includes(searchValue.toUpperCase()));
-
-  function completeTodo(text) {
-    const newTodos = [...todos];
-    const todoIndex = newTodos.findIndex(todo => todo.text === text);
-    newTodos[todoIndex].completed = !newTodos[todoIndex].completed;
-    saveTodos(newTodos);
-  };
-  
-  function deleteTodo(text) {
-    const newTodos = [...todos];
-    const todoIndex = newTodos.findIndex(todo => todo.text === text);
-    newTodos.splice(todoIndex,1);
-    saveTodos(newTodos);
-  };
-
+const {loading,error,searchedTodos,todos,deleteTodo,completeTodo,openModal,setOpenModal} = useContext(TodoContext)
   return (
-
     <>
-      <TodoCounter  total={totalTodos} completed={completedTodos}  />
-      <TodoSearch searchValue={searchValue} setSearchValue={setSearchValue} />
+      <TodoCounter/>
+        <TodoSearch/>
+        <TodoList>
+          {loading && <TodosLoading/>}
+          {error && <TodosError/>}
+          {(!loading && searchedTodos.length === 0) && <EmptyTodos/>}
+    
+          {searchedTodos.map(todo =>
+            <TodoItem todos={todos} onDelete={() => deleteTodo(todo.text)} onComplete={() => completeTodo(todo.text)} key={todo.text} texto={todo.text} completed={todo.completed}/>)
+          }
+        </TodoList>
 
-      <TodoList>
-        {loading && <TodosLoading/>}
-        {error && <TodosError/>}
-        {(!loading && searchedTodos.length === 0) && <EmptyTodos/>}
-
-        {searchedTodos.map(todo =>
-           <TodoItem todos={todos} onDelete={() => deleteTodo(todo.text)} onComplete={() => completeTodo(todo.text)} key={todo.text} texto={todo.text} completed={todo.completed}/>)
-        }
-      </TodoList>
-
-      <CreateTodoButton />
+      <CreateTodoButton setOpenModal={setOpenModal} />
+      { openModal && (
+        <Modal>
+          Crear Todos
+        </Modal>
+      )}
     </>
   );
 }
