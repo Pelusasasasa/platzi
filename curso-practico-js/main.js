@@ -7,7 +7,7 @@ const shoppingCartContainer = document.querySelector('#shoppingCartContainer');
 const products = document.querySelector('.cards-container');
 const productDetail = document.getElementById('productDetail');
 const productDetailClose = document.querySelector('.product-detail-close');
-
+console.log("a")
 menuEmail.addEventListener('click', toggleDesktopMenu);
 menuHamIcon.addEventListener('click', toggleMobileMenu);
 menuCarritoIcon.addEventListener('click',toggleCarritoAside);
