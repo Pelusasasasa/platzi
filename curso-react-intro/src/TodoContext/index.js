@@ -15,6 +15,15 @@ function TodoProvider({children}) {
 
     const searchedTodos = todos.filter(todo => todo.text.toUpperCase().includes(searchValue.toUpperCase()));
 
+    function addTodo(text) {
+        const newTodos = [...todos];
+        newTodos.push({
+            text,
+            completed:false
+        });
+        saveTodos(newTodos);
+    }
+
     function completeTodo(text) {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex(todo => todo.text === text);
@@ -38,6 +47,7 @@ function TodoProvider({children}) {
             searchValue,
             setSearchValue,
             searchedTodos,
+            addTodo,
             completeTodo,
             deleteTodo,
             openModal,

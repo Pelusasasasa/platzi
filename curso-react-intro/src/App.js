@@ -7,6 +7,7 @@ import { TodoItem } from './components/TodoItem';
 import { TodosLoading } from './components/TodosLoading';
 import { TodosError } from './components/TodosError';
 import { EmptyTodos } from './components/EmptyTodos';
+import { TodoForm } from './components/TodoForm';
 import {TodoContext} from './TodoContext/index';
 import { useContext} from 'react';
 import { Modal } from './Modal';
@@ -30,7 +31,7 @@ const {loading,error,searchedTodos,todos,deleteTodo,completeTodo,openModal,setOp
       <CreateTodoButton setOpenModal={setOpenModal} />
       { openModal && (
         <Modal>
-          Crear Todos
+          <TodoForm />
         </Modal>
       )}
     </>
