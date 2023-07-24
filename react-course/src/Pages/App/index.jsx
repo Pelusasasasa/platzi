@@ -9,6 +9,7 @@ import SignIn from '../SignIn';
 import NotFound from '../NotFound';
 
 import Navbar from '../../Components/Navbar';
+import CheckoutSideMenu from '../../Components/CheckoutSideMenu';
 
 import '../../App.css'
 
@@ -17,6 +18,7 @@ function AppRoutes() {
     {path: '/',element: <Home/>},
     {path: '/my-account',element: <MyAccount/>},
     {path: '/my-order',element: <MyOrder/>},
+    {path: '/my-orders/last',element: <MyOrder/>},
     {path: '/my-orders',element: <MyOrders/>},
     {path: '/sign-in',element: <SignIn/>},
     {path: '/*',element: <NotFound/>},
@@ -30,6 +32,7 @@ function App() {
       <BrowserRouter>
         <AppRoutes/>
         <Navbar/>
+        <CheckoutSideMenu/>
       </BrowserRouter>
     </ShoppingCartProvider>
   )
