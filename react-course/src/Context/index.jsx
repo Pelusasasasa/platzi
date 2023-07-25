@@ -13,13 +13,13 @@ export const ShoppingCartProvider = ({children}) =>{
 
     //Product Detail Open/Close
     const [isProductoDetailOpen,setIsProductoDetailOpen] = useState(false);//
-    function openProductDetail() {setIsProductoDetailOpen(true);};
-    function closeProductDetail() {setIsProductoDetailOpen(false);};
+    function openProductDetail() {setIsProductoDetailOpen(true);}
+    function closeProductDetail() {setIsProductoDetailOpen(false);}
 
     //Ckeckout Side Menu Open/Close
     const [isCheckoutSideMenuOpen,setIsCheckoutSideMenuOpen] = useState(false);
-    function openCheckoutSideMenu() {setIsCheckoutSideMenuOpen(true);};
-    function closeCheckoutSideMenu() {setIsCheckoutSideMenuOpen(false);};
+    function openCheckoutSideMenu() {setIsCheckoutSideMenuOpen(true);}
+    function closeCheckoutSideMenu() {setIsCheckoutSideMenuOpen(false);}
 
     //Shopping Cart Order
     const [order,setOrder] = useState([]);

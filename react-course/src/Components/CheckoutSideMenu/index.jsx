@@ -16,7 +16,7 @@ function CheckoutSideMenu() {
     const filteredProducts = cartProducts.filter(elem => elem.id !== id);
     setCartProducts(filteredProducts);
     setCount(count - 1)
-  };
+  }
 
   function handleCheckout() {
     const orderToAdd = {
@@ -26,7 +26,8 @@ function CheckoutSideMenu() {
       totalPrice:totalPrice(cartProducts)
     };
     setOrder([...order,orderToAdd]);
-  
+    setCount(0);
+    closeCheckoutSideMenu();
     setCartProducts([]);
   }
 
