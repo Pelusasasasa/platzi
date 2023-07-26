@@ -30,24 +30,43 @@ export const ShoppingCartProvider = ({children}) =>{
     
     //SearByTitle
     const [searchByTitle,setSearchByTitle] = useState('');
-
+    const [searchByCategory,setSearchByCategory] = useState('');
 
     function filteredItemsByTitle(items,searchByTitle) {
         return items?.filter(item => item.title.toUpperCase().includes(searchByTitle.toUpperCase()));
     };
 
+    function filterBy(searchType,items,searchByTitle,searchByCategory) {
+        if (searchType === 'BY_TITLE') {
+            return filteredItemsByTitle(items,searchByTitle);
+        }else if(searchType === 'BY_CATEGORY'){
+            return filteredItemsByCategory(items,searchByCategory)
+        }else if(searchType === 'BY_TITLE_AND_CATEGORY'){
+            return filteredItemsByCategory(items,searchByCategory).filter(item => item.title.toUpperCase().includes(searchByTitle.toUpperCase()));
+        }else{
+            return items;
+        }
+    }
+
     useEffect(()=>{
-        fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=10')
+        fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=50')
         .then(response => response.json())
         .then(data => setItems(data))
       },[]);
-    
+
 
     useEffect(()=>{
-        if (searchByTitle) {
-            setFilterItems(filteredItemsByTitle(items,searchByTitle));
-        }
-      },[items,searchByTitle]);
+        if (searchByTitle && searchByCategory) setFilterItems(filterBy('BY_TITLE_AND_CATEGORY',items,searchByTitle,searchByCategory))
+        if (searchByTitle && !searchByCategory) setFilterItems(filterBy('BY_TITLE',items,searchByTitle,searchByCategory))
+        if (searchByCategory && !searchByTitle) setFilterItems(filterBy('BY_CATEGORY',items,searchByTitle,searchByCategory))
+        if (!searchByCategory && !searchByTitle) setFilterItems(filterBy(null,items,searchByTitle,searchByCategory))
+    },[items,searchByTitle,searchByCategory]);
+
+
+    function filteredItemsByCategory(items,searchByCategory) {
+       return items?.filter(item => item.category.name.toUpperCase().includes(searchByCategory.toUpperCase()));
+    };
+
 
     return (
         <ShoppingCartContext.Provider value={{
@@ -59,7 +78,8 @@ export const ShoppingCartProvider = ({children}) =>{
             order,setOrder,
             items,setItems,
             searchByTitle,setSearchByTitle,
-            filterItems,setFilterItems
+            filterItems,setFilterItems,
+            searchByCategory,setSearchByCategory,
         }}>
             {children}
         </ShoppingCartContext.Provider>

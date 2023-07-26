@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 
 function CheckoutSideMenu() {
-  const {count,setCount,cartProducts,setCartProducts,isCheckoutSideMenuOpen,closeCheckoutSideMenu,order,setOrder} = useContext(ShoppingCartContext);
+  const {count,setSearchByTitle,setCount,cartProducts,setCartProducts,isCheckoutSideMenuOpen,closeCheckoutSideMenu,order,setOrder} = useContext(ShoppingCartContext);
 
   function handleDelete(id) {
     const filteredProducts = cartProducts.filter(elem => elem.id !== id);
@@ -29,6 +29,7 @@ function CheckoutSideMenu() {
     setCount(0);
     closeCheckoutSideMenu();
     setCartProducts([]);
+    setSearchByTitle('')
   }
 
 
