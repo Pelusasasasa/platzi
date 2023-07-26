@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 export const ShoppingCartContext = createContext();
 
@@ -24,6 +24,31 @@ export const ShoppingCartProvider = ({children}) =>{
     //Shopping Cart Order
     const [order,setOrder] = useState([]);
 
+    //get products
+    const [items,setItems] = useState([]);
+    const [filterItems,setFilterItems] = useState([]);
+    
+    //SearByTitle
+    const [searchByTitle,setSearchByTitle] = useState('');
+
+
+    function filteredItemsByTitle(items,searchByTitle) {
+        return items?.filter(item => item.title.toUpperCase().includes(searchByTitle.toUpperCase()));
+    };
+
+    useEffect(()=>{
+        fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=10')
+        .then(response => response.json())
+        .then(data => setItems(data))
+      },[]);
+    
+
+    useEffect(()=>{
+        if (searchByTitle) {
+            setFilterItems(filteredItemsByTitle(items,searchByTitle));
+        }
+      },[items,searchByTitle]);
+
     return (
         <ShoppingCartContext.Provider value={{
             count,setCount,
@@ -31,7 +56,10 @@ export const ShoppingCartProvider = ({children}) =>{
             isCheckoutSideMenuOpen,openCheckoutSideMenu,closeCheckoutSideMenu,
             productToShow,setproductToShow,
             cartProducts,setCartProducts,
-            order,setOrder
+            order,setOrder,
+            items,setItems,
+            searchByTitle,setSearchByTitle,
+            filterItems,setFilterItems
         }}>
             {children}
         </ShoppingCartContext.Provider>
